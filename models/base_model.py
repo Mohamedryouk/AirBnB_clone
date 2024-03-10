@@ -11,12 +11,13 @@ class BaseModel():
         """
         initialize the model
         """
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs:
-            if '__class__' in kwargs:
-                del kwargs['__class__']
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.isoformat())
+                if key == "__class__":
+                    continue
+                elif key == 'created_at' or key == 'updated_at':
+                    setattr(self, key, datetime.strptime(value, time_format))
                 else:
                     setattr(self, key, value)
         else:
@@ -29,7 +30,6 @@ class BaseModel():
         save the model
         """
         self.updated_at = datetime.utcnow()
-        self.updated_at = self.updated_at
 
     def to_dict(self):
         """
@@ -45,5 +45,5 @@ class BaseModel():
         """
         string representation of the model
         """
-        class_name = self.__class__.__name__
-        return "({}) ({})".format(class_name, self.id, self.__dict__)
+        className = self.__class__.__name__
+        return "[{}] ({}) {}".format(className, self.id, self.__dict__)

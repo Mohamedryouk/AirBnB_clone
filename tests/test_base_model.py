@@ -16,7 +16,7 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         my_model = BaseModel()
         my_model_dict = my_model.to_dict()
-        self.assertNotIsInstance(my_model_dict, dict)
+        self.assertIsInstance(my_model_dict, dict)
         self.assertEqual(my_model_dict["__class__"], "BaseModel")
         self.assertIsNotNone(my_model_dict["id"], my_model.id)
         self.assertIsNotNone(my_model_dict["created_at"], my_model.created_at.isoformat())
@@ -24,7 +24,7 @@ class TestBaseModel(unittest.TestCase):
     
     def test_str(self):
         my_model = BaseModel()
-        self.assertTrue(str(my_model).startswith("BaseModel"))
+        self.assertTrue(str(my_model).startswith("[BaseModel]"))
         self.assertIn(my_model.id, str(my_model))
         self.assertIn(str(my_model.__dict__), str(my_model))
 
