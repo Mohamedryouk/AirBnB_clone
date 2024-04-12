@@ -39,14 +39,10 @@ class FileStorage():
     def reload(self):
         """ reload the database fromthe database and deserialize it into an object."""
         if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                try:
-                    obj_dict = json.load(file)
-
-                    for key, value in obj_dict.items():
-                        class_name, obj_id = key.split(".")
-                        class_n = eval(class_name)
-                        obj_instance = class_n(**value)
-                        FileStorage.__objects[key] = obj_instance
-                except Exception:
-                    pass
+            with open(FileStorage.__file_path, "r") as file:
+                loaded_data = json.load(file)
+            for obj_dict in loaded_data.values():
+                class_name = obj_dict["__class__"]
+                del obj_dict["__class__"]
+                obj = eval(class_name)(**obj_dict)
+                FileStorage._FileStorage__objects[obj.id] = obj
