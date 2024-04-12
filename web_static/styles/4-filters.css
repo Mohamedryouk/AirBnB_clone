@@ -4,13 +4,11 @@
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+
 }
 
 .search-button {
-    position: absolute;
+
     font-size: 18px;
     background-color: #FF5A5F;
     color: #FFFFFF;
@@ -18,9 +16,8 @@
     width: 20%;
     border: none;
     border-radius: 4px;
-    right: 30px;
-    margin-inline-end: 11%;
-    transition: opacity 0.3s ease;
+    right: 11px 30px;
+    float: right;
 }
 .search-button:hover {
     cursor: 0.9;

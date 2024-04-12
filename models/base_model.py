@@ -5,7 +5,11 @@ import models
 
 class BaseModel():
     """
-    BaseModel class for all models
+    Initialize BaseModel class.
+    Arguments:
+    *args:
+        *args (any) : unused argument.
+        **kwargs (dict) : unused keyword arguments.
     """
     def __init__(self, *args, **kwargs):
         """

@@ -2,12 +2,13 @@ footer{
     background-color: #00FF00;
     height: 60px;
     width: 100%;
-    margin: 0;
-    padding: 0;
+    
     position: fixed;
-    align-items: center;
-    justify-content: center;
-    list-style: Bold;
-    display: flex;
+
     bottom: 0;
+    vertical-align: middle;
+}
+
+footer p {
+    text-align: center;
 }

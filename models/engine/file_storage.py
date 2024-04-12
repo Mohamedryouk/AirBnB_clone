@@ -6,14 +6,14 @@ import json
 
 class FileStorage():
     """
-    FileStorage class
+    FileStorage class provides storage for files and data to be stored in a database.
     """
     __file_path = "file.json"
     __objects = {}
 
     def new(self, obj):
         """
-        create a new object
+        create a new object and save class name and content in the obj variable.
         """
         class_name_obj = obj.__class__.__name__
         key = "{} {}".format(class_name_obj, obj.id)
@@ -21,13 +21,13 @@ class FileStorage():
 
     def all(self):
         """
-        return FileStorage.__objects
+        return FileStorage.__objects.
         """
         return FileStorage.__objects
 
     def save(self):
         """
-        save the file
+        save the file to the database as a JSON string.
         """
         allObjects = FileStorage.__objects
         Obj_dict = {}
@@ -37,7 +37,7 @@ class FileStorage():
             json.dump(Obj_dict, file)
 
     def reload(self):
-        """ reload the database"""
+        """ reload the database fromthe database and deserialize it into an object."""
         if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 try:
