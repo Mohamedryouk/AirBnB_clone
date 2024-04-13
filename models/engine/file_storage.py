@@ -2,7 +2,10 @@
 from models.base_model import BaseModel
 import os
 import json
+import logging
 
+logger = logging.getLogger('FileStorage')
+logger.setLevel(logging.DEBUG)
 
 class FileStorage():
     """
@@ -37,12 +40,17 @@ class FileStorage():
             json.dump(Obj_dict, file)
 
     def reload(self):
-        """ reload the database fromthe database and deserialize it into an object."""
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r") as file:
-                loaded_data = json.load(file)
-            for obj_dict in loaded_data.values():
-                class_name = obj_dict["__class__"]
-                del obj_dict["__class__"]
-                obj = eval(class_name)(**obj_dict)
-                FileStorage._FileStorage__objects[obj.id] = obj
+        """ reload the database from the database and deserialize it into an object."""
+        """logger.debug('Objects before reload: %s', len(self.__objects))"""
+        if os.path.isfile(self.__file_path):
+            try:
+                with open(self.__file_path, "r") as file:
+                    loaded_data = json.load(file)
+                for obj_dict in loaded_data.values():
+                    class_name = obj_dict["__class__"]
+                    del obj_dict["__class__"]
+                    obj = eval(class_name)(**obj_dict)
+                    self.__objects[obj.id] = obj
+            except Exception as e:
+                pass
+        """logger.debug('Objects after reload: %s', len(self.__objects))"""

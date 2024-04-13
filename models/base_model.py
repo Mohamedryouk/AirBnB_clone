@@ -10,7 +10,7 @@ class BaseModel():
     Arguments:
     *args:
         *args (any) : unused argument.
-        **kwargs (dict) : unused keyword arguments.
+        **kwargs (dict) : used keyword arguments.
     """
     def __init__(self, *args, **kwargs):
         """

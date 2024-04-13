@@ -3,7 +3,11 @@ import os
 from datetime import datetime
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+import logging
 
+logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+logger = logging.getLogger('FileStorage')
 fs = FileStorage()
 print(type(fs.reload))
 file_path = "file.json"
