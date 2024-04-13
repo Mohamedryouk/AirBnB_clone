@@ -42,15 +42,15 @@ class FileStorage():
     def reload(self):
         """ reload the database from the database and deserialize it into an object."""
         """logger.debug('Objects before reload: %s', len(self.__objects))"""
-        if os.path.isfile(self.__file_path):
-            try:
-                with open(self.__file_path, "r") as file:
+        if os.path.isfile(FileStorage.__file_path):
+            with open(FileStorage.__file_path, "r") as file:
+                try:
                     loaded_data = json.load(file)
-                for obj_dict in loaded_data.values():
-                    class_name = obj_dict["__class__"]
-                    del obj_dict["__class__"]
-                    obj = eval(class_name)(**obj_dict)
-                    self.__objects[obj.id] = obj
-            except Exception as e:
-                pass
+                    for key, value in loaded_data.items():
+                        className, obj_id = key.split('.')
+                        cls = eval(className)
+                        instance = cls(**value)
+                        FileStorage.__objects[key] = instance
+                except Exception:
+                    pass
         """logger.debug('Objects after reload: %s', len(self.__objects))"""
