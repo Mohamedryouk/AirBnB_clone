@@ -39,14 +39,8 @@ class FileStorage():
         """
         reload objects from the JSON file.
         """
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r") as file:
-                try:
-                    loaded_data = json.load(file)
-                    for key, value in loaded_data.items():
-                        className, obj_id = key.split('.')
-                        cls = eval(className)
-                        instance = cls(**value)
-                        FileStorage.__objects[key] = instance
-                except Exception:
-                    pass
+        try:
+            with open(FileStorage.__file_path, 'r', encoding="utf-8") as f:
+                FileStorage.__objects = json.load(f)
+        except FileNotFoundError:
+            pass
