@@ -42,11 +42,11 @@ def reload(self):
     if os.path.isfile(FileStorage.__file_path):
         with open(FileStorage.__file_path, "r") as file:
             try:
-                obj_dict = json.load(file)
-                for key, value in obj_dict.items():
-                    class_name = key.split('.')
-                    cls = eval(class_name)
+                loaded_data = json.load(file)
+                for key, value in loaded_data.items():
+                    className, obj_id = key.split('.')
+                    cls = eval(className)
                     instance = cls(**value)
                     FileStorage.__objects[key] = instance
-            except FileNotFoundError:
+            except Exception:
                 pass
