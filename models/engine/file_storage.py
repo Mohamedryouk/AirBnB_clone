@@ -35,15 +35,17 @@ class FileStorage():
         with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
             json.dump(Obj_dict, file)
 
-def reload(self):
-    """Deserializes the JSON file to __objects (if it exists)."""
+def load(self):
+    """
+    load objects from the JSON file.
+    """
     try:
-        with open(self.__file_path, "r") as file:
-            data_dict = json.load(file)
-            for key, value in data_dict.items():
-                class_name = value['__class__']
+        with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
+            objects = json.load(file)
+            for obj_id, obj_dict in objects.items():
+                class_name = obj_dict['__class__']
                 if class_name in globals():
                     cls = globals()[class_name]
-                    self.__objects[key] = cls(**value)
+                    self.__objects[obj_id] = cls(**obj_dict)
     except FileNotFoundError:
         pass
