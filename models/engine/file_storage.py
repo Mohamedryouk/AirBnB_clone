@@ -35,17 +35,18 @@ class FileStorage():
         with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
             json.dump(Obj_dict, file)
 
-def load(self):
+def reload(self):
     """
-    load objects from the JSON file.
+    reload objects from the JSON file.
     """
-    try:
-        with open(FileStorage.__file_path, 'r', encoding='utf-8') as file:
-            objects = json.load(file)
-            for obj_id, obj_dict in objects.items():
-                class_name = obj_dict['__class__']
-                if class_name in globals():
-                    cls = globals()[class_name]
-                    self.__objects[obj_id] = cls(**obj_dict)
-    except FileNotFoundError:
-        pass
+    if os.path.isfile(FileStorage.__file_path):
+        with open(FileStorage.__file_path, "r") as file:
+            try:
+                obj_dict = json.load(file)
+                for key, value in obj_dict.items():
+                    class_name = key.split('.')
+                    cls = eval(class_name)
+                    instance = cls(**value)
+                    FileStorage.__objects[key] = instance
+            except FileNotFoundError:
+                pass
