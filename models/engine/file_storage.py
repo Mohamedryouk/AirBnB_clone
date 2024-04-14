@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from models.base_model import BaseModel
 import os
+from os import path
 import json
 
 class FileStorage():
@@ -36,11 +37,11 @@ class FileStorage():
             json.dump(Obj_dict, file)
 
     def reload(self):
-        """
-        reload objects from the JSON file.
-        """
+        """Deserializes the JSON file to __objects if file (__file_path) exists."""
         try:
-            with open(FileStorage.__file_path, 'r', encoding="utf-8") as f:
-                FileStorage.__objects = json.load(f)
+            if path.exists(self.__class__.__file_path):
+                with open(self.__class__.__file_path, 'r', encoding="utf-8") as f:
+                    self.__class__.__objects = json.load(f)
         except FileNotFoundError:
-            pass
+                pass
+        
