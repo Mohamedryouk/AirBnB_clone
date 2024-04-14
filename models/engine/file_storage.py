@@ -38,12 +38,12 @@ class FileStorage():
 def reload(self):
     """Reload data from file and update objects dictionary."""
     try:
-        with open(FileStorage.__file_path, "r") as f:
-            loaded_data = json.load(f)
-        for key, val in loaded_data.items():
-            if key in self.all():
-                self.all()[key].update(val)
-            else:
-                self.all()[key] = BaseModel(**val)
+        with open(FileStorage.__file_path, "r") as file:
+            Data_dict = json.load(file)
+        
+        for key, value in Data_dict.items():
+            class_name = value.get('__class__')
+            obj = eval(class_name + '.')
+            FileStorage.__objects[key] = obj
     except FileNotFoundError:
         pass
